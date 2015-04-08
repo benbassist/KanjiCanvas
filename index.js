@@ -5,7 +5,7 @@ var jquery = fs.readFileSync("./jquery-1.11.2.min.js", "utf-8");
 
 jsdom.env({
     //url: "http://news.ycombinator.com/",
-    file: './kanji/0f9a8.svg',
+    file: './kanjivg/0f9a8.svg',
     src: [jquery],
     done: function (errors, window) {
         var $ = window.$;

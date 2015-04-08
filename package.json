@@ -1,0 +1,14 @@
+{
+  "name": "parse-kanjivg",
+  "version": "1.0.0",
+  "description": "extract/transform kanjivg paths to json data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carlo Julian",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^3.1.2"
+  }
+}

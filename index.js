@@ -32,3 +32,19 @@ function parseKanji(errors, window) {
         }
     });
 }
+
+var curr = 0;
+var kanji = [];
+for(var i = 0; i < 217; i++) {
+    kanji.push([]);
+    for(var j = 0; j < 12; j++) {
+        var ang = curr % 360;
+        if (ang > 160 && ang < 200) {
+            kanji[i].push(ang);
+        } else {
+            kanji[i].push(false);
+        }
+        curr++;
+    }
+}
+console.log(kanji);

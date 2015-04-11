@@ -1,58 +1,52 @@
 'use strict';
+var fs = require('fs'),
+    dive = require('dive');
+dive('./kanjivg', diveFileHandler, function(){console.log('complete');});
 
-var jsdom = require('jsdom'),
-    fs = require('fs'),
-    dive = require('dive'),
-    jquery = fs.readFileSync('./jquery-1.11.2.min.js', 'utf-8'),
-    RXPathTag = /<path[^>]*(d=".*")[^>]*\/>/g,
-    RXPathCommand = /([MmCcLlSsZzHhVvQqTtAa])[\s\d.,-]+/g,
-    RXCommandCoord = /-?\d+(\.\d+)?/,
-    RXCommandCoordPair = /-?\d+(\.\d+)?(\s*,?)-?\d+(\.\d+)?/;
+// parse the file and create a new JSON file
+function diveFileHandler(err, file) {
+    if(err) { throw err; return; }
+    var filename,
+        kanji,
+        svg,
+        strokes;
+    svg = fs.readFileSync(file);
+    if(!svg) { return; }
+    filename = parseFileName(file);
+    kanji = parseKanjiChar(svg);
+    strokes = getStrokeData(svg);
+    fs.writeFileSync(
+        './kanjijson/' + filename + '.json',
+        '// ' + kanji + ' - ' + filename + '\n' + strokes
+    );
+}
 
-dive('./kanjivg',
-    function(err,file) {
-        if(err) {
-            throw err;
-        } else {
-            var svgText = fs.readFileSync(file);
-            var result = null;
-            while (result = RXPathTag.exec(svgText)) {
-                //console.log(result[0]);
-                //console.log(result[1]);
-                fs.appendFileSync('./test.txt', result[1]);
-            }
-        }
-    },
-    function() {
-        console.log('complete');
+// given a file path, returns the file name without extension or folder names
+function parseFileName(filepath) {
+    var RX = /\/([^\/]*?)(?:\.[^\.]*$|$)/;
+    var filename = RX.exec(filepath);
+    if (filename) { filename = filename[1]; }
+    return filename;
+}
+
+// parses the kanji character from a kanjivg SVG file
+function parseKanjiChar(svg) {
+    var RX = /kvg:element="(.+)"/;
+    var kanji = RX.exec(svg);
+    kanji = kanji != null ? kanji[1] : 'not kanji';
+    return kanji;
+}
+
+// parses stroke data from kanjivg SVG file
+function getStrokeData(svg) {
+    var RXPathCommand = /([MmCcLlSsZzHhVvQqTtAa])[\s\d.,-]+/g,
+        RXCommandCoord = /-?\d+(\.\d+)?/,
+        RXCommandCoordPair = /-?\d+(\.\d+)?(\s*,?)-?\d+(\.\d+)?/;
+    var RX = /<path.*\sd="(.*)".*\/>/g;
+    var result = '';
+    var strokes;
+    while (strokes = RX.exec(svg)) {
+        result += strokes[1] + '\n';
     }
-);
-
-//jsdom.env({
-//    file: file,
-//    src: [jquery],
-//    done: parseKanji
-//});
-
-// TODO:
-// - parse start & end point of each path
-// - calculate angle of stroke
-// - calculate area of stroke bounding box
-// - calculate stroke origin?
-// - calculate bounding box origin?
-//function parseKanji(errors, window) {
-    //var $ = window.$;
-    //$("path").each(function () {
-    //    //console.log($(this).attr('d'));
-    //    //var result = $(this).attr('d').match(RXPathCommand);
-    //    //console.log(result);
-    //
-    //    var result = null;
-    //    while(result = RXPathCommand.exec($(this).attr('d'))) {
-    //        console.log(result[0]);
-    //        console.log('type: ' + result[1]);
-    //    }
-    //});
-    //console.log($('svg > g[kvg:element]').attr('kvg:element'));
-    //console.log('.');
-//}
+    return result;
+}

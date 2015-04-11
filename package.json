@@ -9,6 +9,7 @@
   "author": "Carlo Julian",
   "license": "ISC",
   "dependencies": {
+    "dive": "^0.4.0",
     "jsdom": "^3.1.2"
   }
 }

@@ -1,7 +1,6 @@
 'use strict';
-var fs = require('fs'),
-    dive = require('dive');
-dive('./kanjivg', diveFileHandler, function(){console.log('complete');});
+var fs = require('fs');
+require('dive')('./kanjivg', diveFileHandler);
 
 // parse the file and create a new JSON file
 function diveFileHandler(err, file) {

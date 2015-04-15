@@ -14,6 +14,7 @@ function diveFileHandler(err, file) {
     filename = parseFileName(file);
     kanji = parseKanjiChar(svg);
     strokes = getStrokeData(svg);
+    strokes = JSON.stringify(strokes);
     fs.writeFileSync(
         './kanjijson/' + filename + '.json',
         '// ' + kanji + ' - ' + filename + '\n' + strokes
@@ -38,38 +39,45 @@ function parseKanjiChar(svg) {
 
 // parses stroke data from kanjivg SVG file
 function getStrokeData(svg) {
-    var RXPathCommand = /([MmCcLlSsZzHhVvQqTtAa])[\s\d.,-]+/g,
-        RXCommandCoord = /-?\d+(\.\d+)?/g,
-        RXCommandCoordPair = /-?\d+(\.\d+)?(\s*,?)-?\d+(\.\d+)?/;
-    var RX = /<path.*\sd="(.*)".*\/>/g,
-        result = '',
+    var RXCommand = /([MmCcLlSsZzHhVvQqTtAa])[\s\d.,-]+/g,
+        RXCoord = /(-?\d+(?:\.\d+)?)/g,
+        RXCoordPair = /(-?\d+(?:\.\d+)?)(\s*,?)(-?\d+(?:\.\d+)?)/g,
+        RXPath = /<path.*\sd="(.*)".*\/>/g,
         path = '',
         command = '',
-        coord = '';
+        coord = '',
+        kanji = [];
 
     // in each SVG find all paths
-    while (path = RX.exec(svg)) {
-        //result += path[1] + '\n';
+    while (path = RXPath.exec(svg)) {
+        var stroke = [];
 
         // in each path find all commands
-        while (command = RXPathCommand.exec(path[1])) {
-            //result += command[0] + '\n';
+        while (command = RXCommand.exec(path[1])) {
 
+            var type = command[1],
+                RX = (type=='h' || type=='H' || type=='v' || type=='V') ? RXCoord : RXCoordPair,
+                com = {
+                    'type': type,
+                    'coords': []
+                };
 
             // in each command find all coords
-            var type = command[1];
-            while (coord = RXCommandCoord.exec(command[0])) {
-                result += coord[0] + '\n';
+            while (coord = RX.exec(command[0])) {
+                if(RX == RXCoord) {
+                    com.coords.push(coord[0]);
+                } else {
+                    com.coords.push({
+                        x: coord[1],
+                        y: coord[2]
+                    })
+                }
             }
 
-            result += '\n';
-            result += '\n';
+            stroke.push(com);
         }
 
-        result += '\n';
-        result += '\n';
-        result += '\n';
-        result += '\n';
+        kanji.push(stroke);
     }
-    return result;
+    return kanji;
 }

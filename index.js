@@ -17,6 +17,8 @@ function diveFileHandler(err, file) {
     kanji = parseKanjiChar(svg);
     strokes = getStrokeData(svg);
     strokes = getStrokePoints(strokes);
+    strokes = getAngles(strokes);
+    //strokes = getStrokeEndPoints(strokes);
     strokes = JSON.stringify(strokes);
     fs.writeFileSync(
         './kanjijson/' + filename + '.json',
@@ -89,7 +91,7 @@ function getStrokeData(svg) {
     return kanji;
 }
 
-// returns an array with start and end coordinates for each stroke in strokes
+// returns an array with coordinates for each point in strokes
 function getStrokePoints(strokes) {
     var s = [], i, j, k;
 
@@ -105,7 +107,6 @@ function getStrokePoints(strokes) {
                     last = strokes[i][j].coords[0];
                     p.push(last);
                     break;
-
                 case 'C':
                     for(k = 0; k < strokes[i][j].coords.length; k++) {
                         if(k % 3 == 2) {
@@ -114,9 +115,7 @@ function getStrokePoints(strokes) {
                         }
                     }
                     break;
-
                 case 'c':
-
                     // for each coord
                     for(k = 0; k < strokes[i][j].coords.length; k++) {
                         if(k % 3 == 2) {
@@ -126,9 +125,48 @@ function getStrokePoints(strokes) {
                         }
                     }
                     break;
+                case 'S':
+                    for(k = 0; k < strokes[i][j].coords.length; k++) {
+                        if(k % 2 == 1) {
+                            last = strokes[i][j].coords[k];
+                            p.push(last);
+                        }
+                    }
+                    break;
+                case 's':
+                    // for each coord
+                    for(k = 0; k < strokes[i][j].coords.length; k++) {
+                        if(k % 2 == 1) {
+                            var temp = strokes[i][j].coords[k];
+                            last = {x:last.x + temp.x, y: last.y + temp.y};
+                            p.push(last);
+                        }
+                    }
+                    break;
             }
         }
-        s.push(p);
+        s.push({points:p});
+    }
+    return s;
+}
+
+function getStrokeEndPoints(strokes) {
+    var i, j, s = [], curr;
+    for (i = 0; i < strokes.length; i++) {
+        curr = strokes[i];
+        s.push([curr[0], curr[curr.length - 1]]);
+    }
+    return s;
+}
+
+function getAngles(strokes) {
+    var i, s = strokes;
+    for (i = 0; i < s.length; i++) {
+        var p1 = s[i].points[0],
+            p2 = s[i].points[s[i].points.length - 1];
+
+        // SVG coordinates are flipped on y-axis so multiply y by -1
+        s[i]['angle'] = Math.atan2(p2.y*(-1) - p1.y*(-1), p2.x - p1.x) * 180/Math.PI;
     }
     return s;
 }

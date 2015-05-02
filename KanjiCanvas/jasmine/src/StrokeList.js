@@ -2,18 +2,59 @@ var StrokeList = (function(helper){
 	'use strict';
 
 	function StrokeList() {
-		var maxX, maxY, minX, minY;
 		this.strokes = [];
-		this.area = 0;
 		this.add = function (stroke) {
 			this.strokes.push(stroke);
-			maxX = helper.max(maxX, stroke[0].x, stroke[1].x);
-			maxY = helper.max(maxY, stroke[0].y, stroke[1].y);
-			minX = helper.min(minX, stroke[0].x, stroke[1].x);
-			minY = helper.min(minY, stroke[0].y, stroke[1].y);
-			this.area = (maxX - minX) * (maxY - minY);
 		};
 	}
 
+    StrokeList.prototype.area = function() {
+        return (this.maxX() - this.minX()) * (this.maxY() - this.minY());
+    };
+
+    StrokeList.prototype.maxX = function() {
+        var i, temp, x = null;
+        for(i = 0; i < this.strokes.length; i++){
+            temp = this.strokes[i].maxX();
+            if(x === null || temp > x) {
+                x = temp;
+            }
+        }
+        return x;
+    };
+
+    StrokeList.prototype.maxY = function() {
+        var i, temp, y = null;
+        for(i = 0; i < this.strokes.length; i++){
+            temp = this.strokes[i].maxY();
+            if(y === null || temp > y) {
+                y = temp;
+            }
+        }
+        return y;
+    };
+
+    StrokeList.prototype.minX = function() {
+        var i, temp, x = null;
+        for(i = 0; i < this.strokes.length; i++){
+            temp = this.strokes[i].minX();
+            if(x === null || temp < x) {
+                x = temp;
+            }
+        }
+        return x;
+    };
+
+    StrokeList.prototype.minY = function() {
+        var i, temp, y = null;
+        for(i = 0; i < this.strokes.length; i++){
+            temp = this.strokes[i].minY();
+            if(y === null || temp < y) {
+                y = temp;
+            }
+        }
+        return y;
+    };    
+    
 	return StrokeList;
 })(helper);

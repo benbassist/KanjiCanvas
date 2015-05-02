@@ -8,15 +8,15 @@ describe('point', function(){
 
 	it('should throw an error if either coordinate is not a number',
 		function(){
-			expect(function(){ p('a',1); }).toThrow(new TypeError('point coordinate is not a number'));
-			expect(function(){ p(1,'a'); }).toThrow(new TypeError('point coordinate is not a number'));
+			expect(function(){ p('a',1); }).toThrowError(TypeError);
+			expect(function(){ p(1,'a'); }).toThrowError(TypeError);
 		}
 	);
 
 	it('should throw an error if it is not passed exactly 2 coordinates',
 		function(){
-			expect(function(){ p(1); }).toThrow(new Error('point requires 2 coordinates'));
-			expect(function(){ p(1,2,3); }).toThrow(new Error('point requires 2 coordinates'));
+			expect(function(){ p(1); }).toThrowError(Error);
+			expect(function(){ p(1,2,3); }).toThrowError(Error);
 		}
 	);
 });

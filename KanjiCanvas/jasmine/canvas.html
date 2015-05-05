@@ -12,7 +12,7 @@
                 width: 200px;
             }
         </style>
-        <script src="CanvasDraw.js"></script>
+        <script src="src/DrawingCanvas.js"></script>
     </head>
     <body>
         <canvas class="canvas"></canvas>
@@ -21,7 +21,13 @@
             (function(){
                 var i, cans = document.querySelectorAll('.canvas');
                 for(i=0; i < cans.length; i++) {
-                    new CanvasDraw(cans[i]);
+                    var foo = new DrawingCanvas(cans[i]);
+                    var cb = function(x,y) {
+                        console.log(x + ', ' + y);
+                    };
+                    foo.drawStartCallback = cb;
+                    foo.drawCallback = cb;
+                    foo.drawEndCallback = cb;
                 }
             })();
         </script>

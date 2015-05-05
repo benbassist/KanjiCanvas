@@ -48,12 +48,14 @@
             done();
         });
         it('should call the drawEndCallback', function(){
-            var cb = {
-                foo: function () { return 0; }
-            };
+            var cb = { foo: function () { return 0; }},
+                mouse = document.createEvent('MouseEvents');
             spyOn(cb, 'foo');
             can.onDrawEnd(cb.foo);
-            can.drawEnd({offsetX:11, offsetY:23, target: { getBoundingClientRect: function(){}}});
+            mouse.initEvent('mousedown', true, true);
+            can.c.dispatchEvent(mouse);
+            mouse.initEvent('mouseup', true, true);
+            can.c.dispatchEvent(mouse);
             expect(cb.foo).toHaveBeenCalled();
         });
     });

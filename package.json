@@ -1,5 +1,5 @@
 {
-  "name": "parse-kanjivg",
+  "name": "KanjiCanvas",
   "version": "1.0.0",
   "description": "extract/transform kanjivg paths to json data",
   "main": "index.js",
@@ -12,3 +12,5 @@
     "dive": "^0.4.0"
   }
 }
+
+        

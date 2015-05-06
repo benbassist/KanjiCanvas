@@ -1,5 +1,5 @@
 {
-  "name": "KanjiCanvas",
+  "name": "kanjivg-to-json",
   "version": "1.0.0",
   "description": "HTML canvas based kanji input mechanism",
   "main": "index.js",

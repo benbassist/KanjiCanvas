@@ -1,12 +1,13 @@
-var StrokeList = (function(helper){
+var StrokeList = (function(){
 	'use strict';
 
 	function StrokeList() {
 		this.strokes = [];
-		this.add = function (stroke) {
-			this.strokes.push(stroke);
-		};
 	}
+
+    StrokeList.prototype.add = function (stroke) {
+        this.strokes.push(stroke);
+    };
 
     StrokeList.prototype.area = function() {
         return (this.maxX() - this.minX()) * (this.maxY() - this.minY());
@@ -54,7 +55,11 @@ var StrokeList = (function(helper){
             }
         }
         return y;
-    };    
+    };
+
+    StrokeList.prototype.clear = function() {
+        this.strokes = [];
+    }
     
 	return StrokeList;
-})(helper);
+})();

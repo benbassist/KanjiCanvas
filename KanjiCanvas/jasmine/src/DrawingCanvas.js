@@ -19,7 +19,7 @@ var DrawingCanvas = (function(){
         this.ctx.lineWidth = 3;
     }
 
-    // given a mouse event returns mouse coordinates relative to the canvas
+    // given a mouse event, returns mouse coordinates relative to the canvas
     DrawingCanvas.prototype.getOffset = function(e) {
         var rect = e.target.getBoundingClientRect();
         return {
@@ -36,6 +36,8 @@ var DrawingCanvas = (function(){
         this.c.addEventListener("mouseout", this.outHandler = this.drawEnd.bind(this), false);
         this.ctx.beginPath();
         this.ctx.moveTo(p.x, p.y);
+        this.ctx.lineTo(p.x, p.y);
+        this.ctx.stroke();
         if(typeof this.drawStartCallback === 'function') {
             this.drawStartCallback(p.x, p.y);
         }
@@ -53,13 +55,13 @@ var DrawingCanvas = (function(){
 
     // closes the path and removes the mouse event handlers
     DrawingCanvas.prototype.drawEnd = function (e) {
-        this.draw(e);
         this.ctx.closePath();
         this.c.removeEventListener('mousemove', this.moveHandler);
         this.c.removeEventListener('mouseup', this.upHandler);
         this.c.removeEventListener('mouseout', this.outHandler);
         this.upHandler = null;
         this.moveHandler = null;
+        this.outHandler = null;
         if(typeof this.drawEndCallback === 'function') {
             this.drawEndCallback();
         }

@@ -1,1 +1,1 @@
-# parse-kanjivg
+# KanjiCanvas

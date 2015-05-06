@@ -1,8 +1,8 @@
 {
   "name": "KanjiCanvas",
   "version": "1.0.0",
-  "description": "extract/transform kanjivg paths to json data",
-  "main": "index.js",
+  "description": "HTML canvas based kanji input mechanism",
+  "main": "transform/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

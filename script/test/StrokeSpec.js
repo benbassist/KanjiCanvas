@@ -50,7 +50,7 @@
                 stroke.add(p3);
                 expect(stroke.angle).toBeCloseTo(90, 0);
             }
-        )
+        );
 
         it(
             'should be able to return the area of the bounding box of the stroke',
@@ -63,7 +63,7 @@
                 stroke.add(p3);
                 expect(stroke.area()).toEqual(49);
             }
-        )
+        );
 
 		describe('max min functions', function() {
 			beforeEach(
@@ -73,7 +73,7 @@
 					stroke.add(p2);
 					stroke.add(p3);
 				}
-			)
+			);
             it('should be able to return its max x coordinate', function () {
                 expect(stroke.maxX()).toEqual(2);
             });

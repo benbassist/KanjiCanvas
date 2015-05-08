@@ -15,10 +15,10 @@
             expect(kc.canvas).toEqual(jasmine.any(DrawingCanvas));
         });
         it('should have a Clear button', function(){
-            expect(kc.clearBtn).toEqual(kc.kc.querySelector('.clear'))
+            expect(kc.clearBtn).toEqual(kc.kc.querySelector('.clear'));
         });
         it('should have a Submit button', function(){
-            expect(kc.submitBtn).toEqual(kc.kc.querySelector('.submit'))
+            expect(kc.submitBtn).toEqual(kc.kc.querySelector('.submit'));
         });
         it('should have a StrokeList', function(){
             expect(kc.strokeList).toEqual(jasmine.any(StrokeList));
@@ -45,7 +45,7 @@
                     bar: function(data){
                         r = data;
                     }
-                }
+                };
                 spyOn(foo, 'bar').and.callThrough();
                 kc.onSubmit(foo.bar);
                 kc.submitBtn.addEventListener('click', function(){ return;});

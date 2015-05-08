@@ -13,17 +13,17 @@
             expect(can.ctx).toExist();
         });
         it('should allow you to register a drawStart callback', function(){
-            var cb = function() { return 'foo' };
+            var cb = function() { return; };
             can.onDrawStart(cb);
             expect(can.drawStartCallback).toEqual(cb);
         });
         it('should allow you to register a draw callback', function(){
-            var cb = function() { return 'foo' };
+            var cb = function() { return; };
             can.onDraw(cb);
             expect(can.drawCallback).toEqual(cb);
         });
         it('should allow you to register a drawEnd callback', function(){
-            var cb = function() { return 'foo' };
+            var cb = function() { return; };
             can.onDrawEnd(cb);
             expect(can.drawEndCallback).toEqual(cb);
         });

@@ -25,7 +25,7 @@ var KanjiCanvas = (function (DrawingCanvas, StrokeList, Stroke, p) {
 		if (typeof this.submitCallback === 'function') {
 			this.submitCallback(this.strokeList);
 		}
-	}
+	};
 
 	KanjiCanvas.prototype.drawStartHandler = function (x, y) {
 		this.currStroke = new Stroke(p(x, y));

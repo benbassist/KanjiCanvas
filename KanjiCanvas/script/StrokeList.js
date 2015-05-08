@@ -59,7 +59,7 @@ var StrokeList = (function(){
 
     StrokeList.prototype.clear = function() {
         this.strokes = [];
-    }
+    };
     
 	return StrokeList;
 })();

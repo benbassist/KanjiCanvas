@@ -56,13 +56,13 @@ var Stroke = (function () {
 
 	Stroke.prototype.area = function () {
 		return (this.maxX() - this.minX()) * (this.maxY() - this.minY());
-	}
+	};
 
 	Stroke.prototype.getAngle = function () {
 		var p1 = this.points[0],
 			p2 = this.points[this.points.length - 1];
 		return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
-	}
+	};
 
 	return Stroke;
 })();

@@ -48,8 +48,7 @@
                 }
                 spyOn(foo, 'bar').and.callThrough();
                 kc.onSubmit(foo.bar);
-                kc.submitBtn.addEventListener('click', function(){ console.log('hello');});
-                console.log(kc.submitBtn);
+                kc.submitBtn.addEventListener('click', function(){ return;});
                 dispatchMouseEvent(kc.submitBtn, 'click', 0, 0);
                 expect(foo.bar).toHaveBeenCalled();
                 expect(r).toEqual(jasmine.any(StrokeList));

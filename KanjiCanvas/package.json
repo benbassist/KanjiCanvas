@@ -1,0 +1,25 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "description": "A test project for experimenting with modern JS libraries, from build tools to front-end libraries",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start karma.conf.js",
+    "lint": "jshint ./script/*.js",
+    "pretest": "npm run lint",
+    "watch": "npm-watch"
+  },
+  "author": "Carlo Julian",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine-core": "^2.3.0",
+    "jshint": "^2.7.0",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "webpack": "^1.8.11"
+  }
+}

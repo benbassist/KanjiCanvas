@@ -9,7 +9,7 @@ var helper = (function(){
                     nums.splice(i,1);
                 }
             }
-            return nums.length == 0 ? NaN : Math.max.apply(null,nums);
+            return nums.length === 0 ? NaN : Math.max.apply(null,nums);
         },
         min: function () {
             var i, nums = Array.prototype.slice.call(arguments);
@@ -18,7 +18,7 @@ var helper = (function(){
                     nums.splice(i,1);
                 }
             }
-            return nums.length == 0 ? NaN : Math.min.apply(null,nums);
+            return nums.length === 0 ? NaN : Math.min.apply(null,nums);
         }
     };
     return helper;

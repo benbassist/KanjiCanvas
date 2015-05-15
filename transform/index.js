@@ -6,16 +6,19 @@
     });
 
     var commandTypeStats = {};
+    var angles = {};
+
 
 // parse the file and create a new JSON file
     function diveFileHandler(err, file) {
         if (err) {
             throw err;
         }
-        var filename,
-            kanji,
-            svg,
-            strokes;
+        var filename;
+        var kanji;
+        var svg;
+        var strokes;
+        var strokesString;
         svg = fs.readFileSync(file);
         if (!svg) {
             return;
@@ -23,16 +26,16 @@
         filename = parseFileName(file);
         kanji = parseKanjiChar(svg);
         if(kanji && !kanji.match(/kvg/)) {
-            console.log(kanji);
             strokes = getStrokeData(svg);
             strokes = getStrokePoints(strokes);
-            strokes = getAngles(strokes);
-            //strokes = getStrokeEndPoints(strokes);
-            strokes = JSON.stringify(strokes);
+            strokes = addAngles(strokes);
+            strokesString = JSON.stringify(strokes);
             fs.writeFileSync(
                 './kanjijson/' + filename + '.json',
-                '// ' + kanji + ' - ' + filename + '\n' + strokes
+                '// ' + kanji + ' - ' + filename + '\n' + strokesString
             );
+            angles[filename] = getAngles(strokes);
+            fs.writeFileSync('./kanjijson/000_test.json', JSON.stringify(angles));
         }
     }
 
@@ -171,7 +174,21 @@
         return s;
     }
 
+    // returns an array of ordered stroke angles
     function getAngles(strokes) {
+        var i, s = strokes;
+        for (i = 0; i < s.length; i++) {
+            var p1 = s[i].points[0],
+                p2 = s[i].points[s[i].points.length - 1];
+
+            // SVG coordinates are flipped on y-axis so multiply y by -1
+            s[i] = Math.atan2(p2.y * (-1) - p1.y * (-1), p2.x - p1.x) * 180 / Math.PI;
+        }
+        return s;
+    }
+
+    // adds angle property to each stroke in strokes
+    function addAngles(strokes) {
         var i, s = strokes;
         for (i = 0; i < s.length; i++) {
             var p1 = s[i].points[0],

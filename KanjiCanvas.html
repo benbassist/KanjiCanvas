@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>KanjiCanvas</title>
+    <style>
+        #KanjiCanvas {
+            margin: 0 auto;
+            width: 200px;
+        }
+
+        canvas {
+            box-shadow: 0 0 6px red;
+            box-sizing: border-box;
+            display: block;
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="KanjiCanvas">
+    <canvas></canvas>
+    <button class="clear">Clear</button>
+    <button class="submit">Submit</button>
+</div>
+<script src="script/point.js"></script>
+<script src="script/Stroke.js"></script>
+<script src="script/StrokeList.js"></script>
+<script src="script/DrawingCanvas.js"></script>
+<script src="script/KanjiCanvas.js"></script>
+<script>
+    var kc = new KanjiCanvas(document.getElementById('KanjiCanvas'));
+    kc.onSubmit(function(){ console.log(kc.strokeList); });
+</script>
+</body>
+</html>

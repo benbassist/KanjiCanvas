@@ -22,15 +22,18 @@
         }
         filename = parseFileName(file);
         kanji = parseKanjiChar(svg);
-        strokes = getStrokeData(svg);
-        strokes = getStrokePoints(strokes);
-        strokes = getAngles(strokes);
-        //strokes = getStrokeEndPoints(strokes);
-        strokes = JSON.stringify(strokes);
-        fs.writeFileSync(
-            './kanjijson/' + filename + '.json',
-            '// ' + kanji + ' - ' + filename + '\n' + strokes
-        );
+        if(kanji && !kanji.match(/kvg/)) {
+            console.log(kanji);
+            strokes = getStrokeData(svg);
+            strokes = getStrokePoints(strokes);
+            strokes = getAngles(strokes);
+            //strokes = getStrokeEndPoints(strokes);
+            strokes = JSON.stringify(strokes);
+            fs.writeFileSync(
+                './kanjijson/' + filename + '.json',
+                '// ' + kanji + ' - ' + filename + '\n' + strokes
+            );
+        }
     }
 
 // given a file path, returns the file name without extension or folder names

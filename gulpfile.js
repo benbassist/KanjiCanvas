@@ -28,7 +28,7 @@ gulp.task('lint', ['clear'], function() {
 });
 
 gulp.task('lint:watch', function(){
-	gulp.watch(transformScript, ['lint']);
+	gulp.watch(testScript.concat(srcScript).concat(transformScript), ['lint']);
 });
 
 gulp.task('clear', function(){

@@ -31,9 +31,14 @@
 <script src="script/StrokeList.js"></script>
 <script src="script/DrawingCanvas.js"></script>
 <script src="script/KanjiCanvas.js"></script>
+<script src="script/kanjiData.js"></script>
+<script src="script/kanjiMatcher.js"></script>
 <script>
     var kc = new KanjiCanvas(document.getElementById('KanjiCanvas'));
-    kc.onSubmit(function(){ console.log(kc.strokeList); });
+    kc.onSubmit(function(strokeList){
+        var strokes = strokeList.strokes.map(function(i){ return i.angle });
+        console.log(kanjiMatcher.match(strokes));
+    });
 </script>
 
 </body>

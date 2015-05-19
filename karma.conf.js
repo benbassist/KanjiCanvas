@@ -18,7 +18,7 @@ module.exports = function (config) {
             'script/lib/**/*.js',
             'script/test/fixtures/**/*',
             'script/kanjiData.js',
-            'script/KanjiMatcher.js',
+            'script/kanjiMatcher.js',
             'script/point.js',
             'script/Stroke.js',
             'script/StrokeList.js',

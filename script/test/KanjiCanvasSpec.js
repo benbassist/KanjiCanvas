@@ -39,7 +39,7 @@
                 dispatchMouseEvent(kc.clearBtn, 'click', 0, 0);
                 expect(kc.strokeList.strokes.length).toEqual(0);
             });
-            it('should fire a callback on submit, passing the current strokeList', function(){
+            it('should fire a callback on submit, passing an array of matching kanji unicode', function(){
                 var r;
                 var foo = {
                     bar: function(data){
@@ -51,7 +51,7 @@
                 kc.submitBtn.addEventListener('click', function(){ return;});
                 dispatchMouseEvent(kc.submitBtn, 'click', 0, 0);
                 expect(foo.bar).toHaveBeenCalled();
-                expect(r).toEqual(jasmine.any(StrokeList));
+                expect(Array.isArray(r)).toEqual(true);
             });
         });
     });

@@ -42,13 +42,13 @@
             'should be able to return the angle ' +
             'of the line drawn between the start and end points',
             function(){
-                var p1 = p(0,1),
-                    p2 = p(0,2),
-                    p3 = p(0,3);
+                var p1 = p(54.5, 20),
+                    p2 = p(54.28, 26.27),
+                    p3 = p(16.5, 87.25);
                 stroke.add(p1);
                 stroke.add(p2);
                 stroke.add(p3);
-                expect(stroke.angle).toBeCloseTo(90, 0);
+                expect(stroke.angle).toBeCloseTo(-119.46887004217427, 0);
             }
         );
 
@@ -61,7 +61,7 @@
                 stroke.add(p1);
                 stroke.add(p2);
                 stroke.add(p3);
-                expect(stroke.area()).toEqual(49);
+                expect(stroke.area).toEqual(49);
             }
         );
 

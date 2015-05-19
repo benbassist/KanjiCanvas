@@ -1,26 +1,21 @@
 var kanjiMatcher = {};
 
 (function (kanjiData) {
-    kanjiMatcher.match = function (strokeData) {
-        if (!Array.isArray(strokeData)) {
-            return null;
-        }
-
-        var numStrokes = strokeData.length;
+    kanjiMatcher.match = function (strokeList) {
+        if(!(strokeList instanceof StrokeList)) { return null };
+        var numStrokes = strokeList.strokes.length;
         var potentialMatches = kanjiData.numStrokesIndex[numStrokes];
-        var rankedMatches = rank(strokeData, potentialMatches);
-
-        return rankedMatches;
+        return rank(strokeList, potentialMatches);
     };
 
-    function rank(strokeData, potentialMatches) {
+    function rank(strokeList, potentialMatches) {
         var i, j;
         var scores = [];
         for(i = 0; i < potentialMatches.length; i++) {
             var key = potentialMatches[i];
             scores[i] = { key: key, score: 0 };
-            for(j = 0; j < strokeData.length; j++) {
-                var diff = getAngleDiff(strokeData[j], kanjiData.strokeData[key][j]);
+            for(j = 0; j < strokeList.strokes.length; j++) {
+                var diff = getAngleDiff(strokeList.strokes[j].angle, kanjiData.strokeData[key][j]);
                 scores[i].score += diff;
             }
         }

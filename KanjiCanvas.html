@@ -25,19 +25,27 @@
     <button class="clear">Clear</button>
     <button class="submit">Submit</button>
 </div>
+<div id="matches"></div>
 <script src="script/kanjiData.js"></script>
 <script src="script/point.js"></script>
 <script src="script/Stroke.js"></script>
 <script src="script/StrokeList.js"></script>
 <script src="script/DrawingCanvas.js"></script>
-<script src="script/KanjiCanvas.js"></script>
 <script src="script/kanjiData.js"></script>
 <script src="script/kanjiMatcher.js"></script>
+<script src="script/KanjiCanvas.js"></script>
 <script>
     var kc = new KanjiCanvas(document.getElementById('KanjiCanvas'));
-    kc.onSubmit(function(strokeList){
-        var strokes = strokeList.strokes.map(function(i){ return i.angle });
-        console.log(kanjiMatcher.match(strokes));
+    var matches = document.getElementById('matches');
+    kc.onSubmit(function(results){
+        var resultsString = '';
+        for(var i = 0; i < results.length; i++) {
+            resultsString += String.fromCharCode(parseInt(results[i], 16));
+        }
+        matches.innerHTML =  resultsString;
+
+        console.log(results);
+        console.log(resultsString);
     });
 </script>
 

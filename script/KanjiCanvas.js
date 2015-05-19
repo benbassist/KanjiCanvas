@@ -1,4 +1,4 @@
-var KanjiCanvas = (function (DrawingCanvas, StrokeList, Stroke, p) {
+var KanjiCanvas = (function (kanjiMatcher, DrawingCanvas, StrokeList, Stroke, p) {
 	'use strict';
 
 	function KanjiCanvas(el) {
@@ -22,8 +22,11 @@ var KanjiCanvas = (function (DrawingCanvas, StrokeList, Stroke, p) {
 	};
 
 	KanjiCanvas.prototype.submit = function () {
+		var strokes = this.strokeList.strokes.map(function(i){ return i.angle; });
+		var results = kanjiMatcher.match(this.strokeList);
+		console.log(results);
 		if (typeof this.submitCallback === 'function') {
-			this.submitCallback(this.strokeList);
+			this.submitCallback(results);
 		}
 	};
 
@@ -49,4 +52,4 @@ var KanjiCanvas = (function (DrawingCanvas, StrokeList, Stroke, p) {
 
 	return KanjiCanvas;
 
-})(DrawingCanvas, StrokeList, Stroke, p);
+})(kanjiMatcher, DrawingCanvas, StrokeList, Stroke, p);

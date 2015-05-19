@@ -24,7 +24,6 @@ var KanjiCanvas = (function (kanjiMatcher, DrawingCanvas, StrokeList, Stroke, p)
 	KanjiCanvas.prototype.submit = function () {
 		var strokes = this.strokeList.strokes.map(function(i){ return i.angle; });
 		var results = kanjiMatcher.match(this.strokeList);
-		console.log(results);
 		if (typeof this.submitCallback === 'function') {
 			this.submitCallback(results);
 		}

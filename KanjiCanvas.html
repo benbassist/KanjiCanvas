@@ -39,7 +39,7 @@
     var matches = document.getElementById('matches');
     kc.onSubmit(function(results){
         var resultsString = '';
-        for(var i = 0; i < results.length; i++) {
+        for(var i = 0; i < results.length & i < 20; i++) {
             resultsString += String.fromCharCode(parseInt(results[i], 16));
         }
         matches.innerHTML =  resultsString;

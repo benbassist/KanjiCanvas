@@ -1,6 +1,6 @@
 # KanjiCanvas
 
-HTML canvas based Kanji input mechanism
+HTML canvas based Kanji (Japanese characters) input mechanism.  Draw a kanji character on the canvas, hit submit and the program will reveal closest matches based on stroke order, angle and relative size of each stroke.
 
 To try it out clone project and open KanjiCanvas.html
 
